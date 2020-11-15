@@ -26,6 +26,7 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
         setContentView(R.layout.activity_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Menú Principal");
 
         presenter= new ListPresenter( this);
 
@@ -35,7 +36,9 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Click on  Floating button");
-                presenter.onClickFloatingButton();
+
+                Intent intent = new Intent(getApplicationContext(), FormActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -69,6 +72,41 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
         Intent intent = new Intent(getApplicationContext(), FormActivity.class);
         startActivity(intent);
 
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG,"Starting onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG,"Starting onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG,"Starting onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG,"Starting onStop");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG,"Starting onRestart");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG,"Starting onDestroy");
     }
 
 }

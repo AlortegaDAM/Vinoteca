@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sYearTIL"
+                android:layout_width="112dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginEnd="134dp"
+                android:layout_marginRight="134dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sYearImage"
+                app:layout_constraintTop_toBottomOf="@+id/sSpinner">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sYearTE"
+                    android:layout_width="78dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="datetime" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/sYearImage"
+                android:layout_width="38dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="47dp"
+                android:layout_marginLeft="47dp"
+                android:layout_marginTop="22dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageS"
+                app:srcCompat="@drawable/calendar" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sNameTIL"
+                android:layout_width="133dp"
+                android:layout_height="29dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="139dp"
+                android:layout_marginRight="139dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView10"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sNameTE"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="33dp"
+                android:layout_height="41dp"
+                android:layout_marginStart="56dp"
+                android:layout_marginLeft="56dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginRight="50dp"
+                app:layout_constraintEnd_toStartOf="@+id/sNameTIL"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/nameitem" />
+
+            <ImageView
+                android:id="@+id/imageS"
+                android:layout_width="39dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="46dp"
+                android:layout_marginLeft="46dp"
+                android:layout_marginTop="31dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView10"
+                app:srcCompat="@drawable/alc" />
+
+            <Spinner
+                android:id="@+id/sSpinner"
+                android:layout_width="127dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginLeft="64dp"
+                android:layout_marginTop="31dp"
+                android:layout_marginEnd="135dp"
+                android:layout_marginRight="135dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageS"
+                app:layout_constraintTop_toBottomOf="@+id/sNameTIL" />
+
+            <Button
+                android:id="@+id/buttonS"
+                android:layout_width="163dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="28dp"
+                android:text="@string/sButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sYearTIL" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Vinoteca</string>
+    <string name="action_settings">Configuración</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+    <string name="title_activity_logo">Logo</string>
+    <string name="title_activity_form">Formulario</string>
+    <string name="name">Nombre</string>
+    <string name="cellar">Bodega</string>
+    <string name="denomination">Denominación</string>
+    <string name="menu">Menú</string>
+    <string name="price">Precio</string>
+    <string name="year">Año</string>
+    <string name="type">Tipo</string>
+    <string name="photo">Foto</string>
+    <string name="name_error">Nombre incorrecto</string>
+    <string name="cellar_error">El campo Bodega requiere 8 caracteres</string>
+    <string name="denomination_error">Denominación incorrecta</string>
+    <string name="price_error">El precio tiene que ser un número positivo</string>
+    <string name="spinner">Desplegable</string>
+    <string name="menu_form">Menú/Nuevo Vino</string>
+    <string name="c_a">Con alcohol</string>
+    <string name="title_activity_search">Búsqueda</string>
+    <string name="title_activity_about">Sobre nosotros</string>
+    <string name="searchActivity">Búscar</string>
+    <string name="action_search">Buscar</string>
+    <string name="aboutus">Sobre nosotros</string>
+    <string name="dev">Desarrollador: Luis Daniel Ortega</string>
+    <string name="aboutActivity">Sobre nosotros</string>
+    <string name="tinto">Tinto</string>
+    <string name="blanco">Blanco</string>
+    <string name="espumoso">Espumoso</string>
+    <string name="rosado">Rosado</string>
+    <string name="dulce">Dulce</string>
+    <string name="helpbutton">Ayuda</string>
+    <string name="aboutbutton">Sobre nosotros</string>
+    <string name="orderbutton">Ordenar por...</string>
+    <string name="sButton">"Buscar "</string>
+    <string name="add">Añadir</string>
+    <string name="cancel">Cancelar</string>
+    <string name="permission_granted">Permisos aceptados</string>
+    <string name="permission_denied">No tienes permisos</string>
+    <string name="imageselected">Elija una imagen</string>
+    <string name="borrar_imagen">Borrar imagen</string>
+    <string name="deshacer">Deshacer</string>
+</resources>

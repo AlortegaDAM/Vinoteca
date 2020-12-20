@@ -2,13 +2,56 @@
     <string name="app_name">Vinoteca</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_logo">LogoActivity</string>
     <string name="title_activity_form">FormActivity</string>
+    <string name="spinner">Spinner</string>
+    <string name="name">Name</string>
+    <string name="cellar">Cellar</string>
+    <string name="denomination">Denomination</string>
+    <string name="menu">Menu</string>
+    <string name="menu_form">Menu/New Wine</string>
+    <string name="price">Price</string>
+    <string name="year">Year</string>
+    <string name="type">Type</string>
+    <string name="photo">Photo</string>
+    <string name="name_error">Name incorrect</string>
+    <string name="cellar_error">Cellar error: need to have 8 chars</string>
+    <string name="denomination_error">Denomination error</string>
+    <string name="price_error">Price error: Need to be a positive number</string>
+    <string name="c_a">With alcohol</string>
+    <string name="searchActivity">SearchActivity</string>
+    <string name="title_activity_search">Search</string>
+    <string name="action_search">Search</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="aboutus">About Us</string>
+    <string name="dev">Developer: Luis Daniel Ortega</string>
+    <string name="aboutActivity">About us</string>
+    <string name="tinto">Red wine</string>
+    <string name="blanco">White wine</string>
+    <string name="espumoso">Sparkling wine</string>
+    <string name="rosado">Pink wine</string>
+    <string name="dulce">Sweet wine</string>
+    <string name="helpbutton">Help</string>
+    <string name="aboutbutton">About us</string>
+    <string name="orderbutton">Order by</string>
+    <string name="sButton">Start Search</string>
+    <string name="correo" translatable="false">alortega@iesfranciscodelosrios.es</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="borrar_imagen">Delete image</string>
+
+    <string name="permission_granted">You have permission</string>
+    <string name="permission_denied">You do not have permission</string>
+    <string name="imageselected">Select an image</string>
+    <string name="deshacer">Undo</string>
+    <string name="deletedWine">"Delete Wine "</string>
+    <string name="vinos">10 Vinos encontrados</string>
+
 </resources>

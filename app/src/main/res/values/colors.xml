@@ -7,4 +7,19 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- ambers -->
+    <array name="ambers">
+        <item>@color/md_amber_200</item>
+        <item>@color/md_amber_700</item>
+        <item>@color/md_amber_900</item>
+    </array>
+    <color name="md_amber_200">#ffe082</color>
+    <color name="md_amber_700">#ffa000</color>
+    <color name="md_amber_900">#ff6f00</color>
+    <array name="texts_white">
+        <item>@color/md_divider_white</item>
+    </array>
+    <color name="md_divider_white">#1fffffff</color>
+
 </resources>

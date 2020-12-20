@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.vinoteca">
 
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
+        android:name=".views.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -10,9 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Vinoteca">
         <activity
+            android:name=".views.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/Theme.Vinoteca.NoActionBar"></activity>
+        <activity
+            android:name=".views.SearchActivity"
+            android:label="@string/title_activity_search"
+            android:theme="@style/Theme.Vinoteca.NoActionBar" />
+        <activity
             android:name=".views.FormActivity"
             android:label="@string/title_activity_form"
-            android:theme="@style/Theme.Vinoteca.NoActionBar"></activity>
+            android:theme="@style/Theme.Vinoteca.NoActionBar" />
         <activity
             android:name=".views.LogoActivity"
             android:label="Vinoteca"
@@ -26,7 +38,7 @@
         <activity
             android:name=".views.ListActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Vinoteca.NoActionBar"></activity>
+            android:theme="@style/Theme.Vinoteca.NoActionBar" />
     </application>
 
 </manifest>

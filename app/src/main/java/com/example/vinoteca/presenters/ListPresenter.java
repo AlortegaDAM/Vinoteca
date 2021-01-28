@@ -48,4 +48,5 @@ public class ListPresenter implements ListInterface.Presenter {
         // Decirle al RV que lo elimino
         view.removeRecyclerViewItem(id);
     }
+    //public ArrayList<ContactEntity> getAllSummarize();
 }

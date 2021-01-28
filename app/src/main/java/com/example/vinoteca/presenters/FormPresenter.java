@@ -8,19 +8,30 @@ import androidx.core.content.ContextCompat;
 
 import com.example.vinoteca.R;
 import com.example.vinoteca.interfaces.FormInterface;
+import com.example.vinoteca.models.WineEntity;
+import com.example.vinoteca.models.WineModel;
 import com.example.vinoteca.views.MyApplication;
+
+import java.util.List;
 
 public class FormPresenter implements FormInterface.Presenter {
     private FormInterface.View view;
     String TAG="Vinoteca/FormPresenter";
+    private WineModel wineR;
     final private int CODE_WRITE_EXTERNAL_STORAGE_PERMISSION = 123;
     public FormPresenter(FormInterface.View view){
         this.view =view;
+        wineR =new WineModel();
     }
 
+
+
     @Override
-    public void onClickSaveButton() {
+    public void onClickSaveButton(WineEntity wine) {
         Log.d(TAG,"On click save");
+        if(wineR.insert(wine)){
+            view.closeActivity();
+        }else
         view.wineNew();
     }
 
@@ -88,5 +99,9 @@ public class FormPresenter implements FormInterface.Presenter {
     public void permissionDenied() {
         Log.d(TAG, "permission denied");
         view.showErrorPermissionDenied();
+    }
+    @Override
+    public List<String> getSpinner() {
+        return wineR.getSpinnerValues();
     }
 }

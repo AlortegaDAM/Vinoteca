@@ -16,6 +16,7 @@ import android.os.Bundle;
 import com.example.vinoteca.R;
 import com.example.vinoteca.interfaces.FormInterface;
 import com.example.vinoteca.models.WineEntity;
+import com.example.vinoteca.models.WineModel;
 import com.example.vinoteca.presenters.FormPresenter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -33,6 +34,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,6 +46,7 @@ import android.widget.Toast;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class FormActivity extends AppCompatActivity implements FormInterface.View {
@@ -63,9 +66,12 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
     TextInputEditText yearTE;
     ImageView imageWine;
     Button buttonImage;
-    TextView textViewid;
-    private List<String> tipo= null;
+    private List<String> type= null;
     private Spinner spinner = null;
+    private int Year, Month, Day;
+    private Calendar calendar;
+    ImageView imageDate;
+    private CheckBox checkBox;
     private ArrayAdapter<String> adapter_wine;
     private DatePickerDialog datePickerDialog;
     private String id;
@@ -73,6 +79,7 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
     private static final int REQUEST_SELECT_IMAGE = 201;
     private ConstraintLayout constraintLayoutForm;
     private Uri uri;
+    private WineModel winemodel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,17 +113,18 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Click on  Save button");
-                presenter.onClickSaveButton();
+                wine.setName(nameTE.getText().toString());
+                presenter.onClickSaveButton(wine);
             }
         });
-        spinner = (Spinner) findViewById(R.id.spinner);
+        /*spinner = (Spinner) findViewById(R.id.spinner);
         tipo = new ArrayList<String>();
         tipo.add(sContext.getResources().getString(R.string.tinto));
         tipo.add(sContext.getResources().getString(R.string.blanco));
         tipo.add(sContext.getResources().getString(R.string.rosado));
         tipo.add(sContext.getResources().getString(R.string.dulce));
         tipo.add(sContext.getResources().getString(R.string.espumoso));
-        adapter_wine = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, tipo);
+        adapter_wine = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, type);
         adapter_wine.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter_wine);
         ImageView SpinnerAdd = findViewById(R.id.imageViewSpinner);
@@ -126,31 +134,131 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
                 Log.d(TAG, "On click SpinnerButtonadd");
                 presenter.AddSpinner();
             }
+        });*/
+        type = new ArrayList<String>();
+        type.addAll(presenter.getSpinner());
+        adapter_wine = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, type);
+        adapter_wine.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinner = (Spinner) findViewById(R.id.spinner);
+        spinner.setAdapter(adapter_wine);
+        ImageView SpinnerAdd = findViewById(R.id.imageViewSpinner);
+        SpinnerAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "On click SpinnerButtonadd");
+                presenter.AddSpinner();
+            }
         });
+
+        checkBox= (CheckBox) findViewById(R.id.checkBox);
+
         nameTE = findViewById(R.id.nameTE);
         nameTIL = findViewById(R.id.nameTIL);
         nameTE.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange (View view,boolean hasFocus){
                 if (!hasFocus) {
-                    Log.d(TAG, "Exit EditText");
+                    Log.d(TAG, "Exit EditTextName");
                     if (wine.setName(nameTE.getText().toString()) == false) {
                         nameTIL.setError(presenter.getError("WineName"));
                     } else {
                         nameTIL.setError("");
                     }
                 } else {
-                    Log.d(TAG, "Input EditText");
+                    Log.d(TAG, "Input EditTextName");
                 }
             }
 
             });
+        cellarTE = findViewById(R.id.cellarTE);
+        cellarTIL = findViewById(R.id.cellarTIL);
+        cellarTE.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange (View view,boolean hasFocus){
+                if (!hasFocus) {
+                    Log.d(TAG, "Exit EditTextCellar");
+                    if (wine.setCellar(cellarTE.getText().toString()) == false) {
+                        cellarTIL.setError(presenter.getError("WineCellar"));
+                    } else {
+                        cellarTIL.setError("");
+                    }
+                } else {
+                    Log.d(TAG, "Input EditTextCellar");
+                }
+            }
+
+        });
+        denominationTE = findViewById(R.id.denominationTE);
+        denominationTIL = findViewById(R.id.denominationTIL);
+        denominationTE.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange (View view,boolean hasFocus){
+                if (!hasFocus) {
+                    Log.d(TAG, "Exit EditTextDenomination");
+                    if (wine.setDenomination(denominationTE.getText().toString())==false){
+                        denominationTIL.setError(presenter.getError("WineDenomination"));
+                    } else {
+                        denominationTIL.setError("");
+                    }
+                    } else {
+                    Log.d(TAG, "Input EditTextDenomination");
+                }
+            }
+
+        });
+        priceTE = findViewById(R.id.priceTE);
+        priceTIL = findViewById(R.id.priceTIL);
+        priceTE.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange (View view,boolean hasFocus){
+                if (!hasFocus) {
+                    Log.d(TAG, "Exit EditTextPrice");
+                    if (wine.setPrice(priceTE.getText().toString()) == false) {
+                        priceTIL.setError(presenter.getError("WinePrice"));
+                    } else {
+                        priceTIL.setError("");
+                    }
+                } else {
+                    Log.d(TAG, "Input EditTextPrice");
+                }
+            }
+
+        });
+        calendar = Calendar.getInstance();
+        Year = calendar.get(Calendar.YEAR);
+        Month = calendar.get(Calendar.MONTH);
+        Day = calendar.get(Calendar.DAY_OF_MONTH);
+        imageDate= (ImageView) findViewById(R.id.imageDate);
+        imageDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialog = new DatePickerDialog(sContext, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String day = "" + dayOfMonth;
+                        if (dayOfMonth<10) {
+                            day = "0" + dayOfMonth;
+                        }
+                        String month0 = "" + (month + 1);
+                        if (month<10) {
+                            month0 = "0" + month0;
+                        }
+                        yearTE.setText(day +"/"+ month0 +"/"+ year);
+                        yearTIL.setError(presenter.getError("YearTrue"));
+                    }
+                }, Year, Month, Day);
+                datePickerDialog.show();
+            }
+        });
 
 
-        textViewid=findViewById(R.id.textViewid);
+
+
+
+
         id=getIntent().getStringExtra("id");
         if(id!=null){
-            textViewid.setText(id);
+            nameTE.setText(id);
         }       else{
             //deshabilitar el boton eliminar
         }
@@ -275,25 +383,21 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
         switch (requestCode) {
             case (REQUEST_SELECT_IMAGE):
                 if (resultCode == Activity.RESULT_OK) {
-                    // Se carga la imagen desde un objeto Bitmap
+                    /*Se carga la imagen desde un objeto Bitmap*/
                     Uri selectedImage = data.getData();
                     String selectedPath = selectedImage.getPath();
-
                     if (selectedPath != null) {
-                        // Se leen los bytes de la imagen
+                        /*Bytes de la imagen*/
                         InputStream imageStream = null;
                         try {
                             imageStream = getContentResolver().openInputStream(selectedImage);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
-
-                        // Se transformam los bytes de la imagen a un Bitmap
+                        /*Transforma los bytes-imagen a un Bitmap*/
                         Bitmap bmp = BitmapFactory.decodeStream(imageStream);
                         Bitmap imageScaled = Bitmap.createScaledBitmap(bmp, 200, 200, false);
-
-
-                        // Se carga el Bitmap en el ImageView
+                        /*Carga Bitmap en el ImageView*/
                         imageWine.setImageBitmap(imageScaled);
                     }
                 }

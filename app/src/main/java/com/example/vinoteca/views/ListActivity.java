@@ -91,7 +91,6 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
         wine7.setName("Moët & Chandon Brut Imperial");
         wine7.setCellar("Francia");
         wine7.setDenomination("Champagne");
-        wine7.setImage("");
         WineEntity wine8=new WineEntity();
         wine8.setName("Mumm Cordon Rouge");
         wine8.setCellar("Francia");
@@ -260,6 +259,8 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
     protected void onResume() {
         super.onResume();
         Log.d(TAG,"Starting onResume");
+
+    //    items= presenter.getAllSumarize();
     }
 
     @Override

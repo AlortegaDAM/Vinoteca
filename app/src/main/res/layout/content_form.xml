@@ -296,20 +296,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/spinnerTIL"
                 app:srcCompat="@android:drawable/ic_delete" />
 
-            <TextView
-                android:id="@+id/textViewid"
-                android:layout_width="69dp"
-                android:layout_height="96dp"
-                android:layout_marginStart="22dp"
-                android:layout_marginLeft="22dp"
-                android:layout_marginTop="118dp"
-                android:layout_marginEnd="61dp"
-                android:layout_marginRight="61dp"
-                android:layout_marginBottom="91dp"
-                app:layout_constraintBottom_toTopOf="@+id/nameTIL"
-                app:layout_constraintEnd_toStartOf="@+id/imageWine"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

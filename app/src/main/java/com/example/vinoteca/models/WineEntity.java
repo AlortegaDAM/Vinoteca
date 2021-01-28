@@ -1,17 +1,27 @@
 package com.example.vinoteca.models;
 
-public class WineEntity {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class WineEntity extends RealmObject {
+
+    @PrimaryKey
     private String id;
     private String name;
     private String cellar;
     private String denomination;
-    private double price;
+    private String price;
     private String type;
     private String image;
 
 
     public WineEntity() {
+    }
+    public WineEntity(String image, String name, String cellar, String id){
+        this.image=image;
+        this.name=name;
+        this.cellar=cellar;
+        this.id=id;
     }
 
     public String getName() {
@@ -39,12 +49,12 @@ public class WineEntity {
         }
 
     }
-    public double getPrice(){
+    public String getPrice(){
         return price;
     }
-    public boolean setPrice(Double price){
+    public boolean setPrice(String price){
         if( price!=null){
-            this.price=price;
+            this.price= price;
             return true;
         }else{return false;}
     }
@@ -61,8 +71,12 @@ public class WineEntity {
         return denomination;
     }
 
-    public void setDenomination(String denomination) {
-        this.denomination = denomination;
+    public boolean setDenomination(String denomination) {
+        if( denomination!=null){
+            this.denomination= denomination;
+            return true;
+        }else{
+            return false;}
     }
 
     public String getImage() {

@@ -80,7 +80,10 @@ public class WineAdapter extends RecyclerView.Adapter<WineAdapter.WineViewHolder
     // Indica el nÃºmero de elementos de la colecciÃ³n de datos.
     @Override
     public int getItemCount() {
-        return items.size();
+        if(items!=null) {
+            return items.size();
+        }
+        return 0;
     }
 
     // Asigna un listener al elemento

@@ -9,6 +9,7 @@ public interface FormInterface {
 
     public interface View {
         void wineNew();
+        void saveWine();
         void addSpinner();
         void backToList();
         void closeActivity();
@@ -16,6 +17,7 @@ public interface FormInterface {
         void selectImageFromGallery();
         void showErrorPermissionDenied();
         void cleanImage();
+        void deleteWine();
     }
 
     public interface Presenter {
@@ -28,5 +30,8 @@ public interface FormInterface {
         void permissionGranted();
         void permissionDenied();
         List<String> getSpinner();
+        void onClickDeleteButton(String id);
+        WineEntity getWineById(String id);
+        void onClickDeleteImage();
     }
 }

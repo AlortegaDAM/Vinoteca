@@ -53,5 +53,8 @@
     <string name="deshacer">Undo</string>
     <string name="deletedWine">"Delete Wine "</string>
     <string name="vinos">10 Vinos encontrados</string>
+    <string name="update">Update Wine</string>
+    <string name="sureDelete">Are you sure to delete this wine?</string>
+    <string name="wineUnsafe">Wine was not created, please try it again.</string>
 
 </resources>

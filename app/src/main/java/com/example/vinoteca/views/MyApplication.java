@@ -17,29 +17,6 @@ public class MyApplication extends Application {
         Realm.init(sContext);
 
 
-
-        // Aplicar configuración específica a la base de datos
-        // name(): establecer el nombre del fichero de la base de datos
-        // .directory(): establecer la ruta del fichero de la base de datos
-        // .allowQueriesOnUiThread(): permitir consultas en el mismo hilo de la interfaz gráfica
-        // .allowWritesOnUiThread(): permitir escrituras en el mismo hilo de la interfaz gráfica
-        RealmConfiguration config = new RealmConfiguration
-                .Builder()
-                .name("vinoteca.realm")
-                //.directory(getExternalFilesDirs(null)[1])
-                .allowQueriesOnUiThread(true)
-                .allowWritesOnUiThread(true)
-                .build();
-        Realm.setDefaultConfiguration(config);
-
-        // Comprobar la ruta de almacenamiento de la base de datos
-        // La ruta por defecto es /data/data/[app]/files
-        /*
-        Realm realm = Realm.getDefaultInstance();
-        Log.d("VinotecaRealm", "Path: " + realm.getPath());
-        realm.close();
-        */
-
     }
 
     public static Context getContext() {

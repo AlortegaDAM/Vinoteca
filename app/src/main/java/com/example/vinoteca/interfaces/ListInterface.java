@@ -1,5 +1,9 @@
 package com.example.vinoteca.interfaces;
 
+import com.example.vinoteca.models.WineEntity;
+
+import java.util.ArrayList;
+
 public interface ListInterface {
 
     public interface View{
@@ -16,6 +20,8 @@ public interface ListInterface {
         void onClickAboutButton();
         void onClickSearchButton();
         void onClickRecyclerViewItem(String id);
-        void onSwipeRecyclerViewItem(int id);
+        void onSwipeRecyclerViewItem(int id, WineEntity wine);
+        void wineCharge();
+        ArrayList<WineEntity> getAllSummarize();
     }
 }

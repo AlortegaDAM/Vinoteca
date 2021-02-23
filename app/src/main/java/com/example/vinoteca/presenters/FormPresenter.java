@@ -29,10 +29,19 @@ public class FormPresenter implements FormInterface.Presenter {
     @Override
     public void onClickSaveButton(WineEntity wine) {
         Log.d(TAG,"On click save");
-        if(wineR.insert(wine)){
+        if(wine.getId()!="" && wine.getId()!=null){
+            wineR.updateWine(wine);
+            view.saveWine();
+        }else if(wineR.insert(wine)){
+            view.saveWine();
+        }else{
+            //view.toast(MyApplication.getContext().getResources().getString(R.string.wineUnsafe));
+        }
+
+        /*if(wineR.insert(wine)){
             view.closeActivity();
         }else
-        view.wineNew();
+        view.wineNew();*/
     }
 
     @Override
@@ -94,6 +103,9 @@ public class FormPresenter implements FormInterface.Presenter {
         Log.d(TAG, "permissionGranted");
         view.selectImageFromGallery();
     }
+    public WineEntity getWine(String id) {
+        return wineR.getWineById(id);
+    }
 
     @Override
     public void permissionDenied() {
@@ -101,7 +113,20 @@ public class FormPresenter implements FormInterface.Presenter {
         view.showErrorPermissionDenied();
     }
     @Override
+    public WineEntity getWineById(String id) {
+        return wineR.getWineById(id);
+    }
+    @Override
     public List<String> getSpinner() {
         return wineR.getSpinnerValues();
     }
+    public void onClickDeleteImage(){
+        view.deleteWine();
+    }
+    @Override
+    public void onClickDeleteButton(String id) {
+        wineR.deleteWine(id);
+        view.backToList();
+    }
+
 }

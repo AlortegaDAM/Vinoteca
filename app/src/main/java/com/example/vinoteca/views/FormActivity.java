@@ -53,6 +53,7 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
     String TAG = "Vinoteca/views/formActivity";
     private FormInterface.Presenter presenter;
     private Context sContext;
+    private boolean neWine;
     WineEntity wine;
     TextInputLayout nameTIL;
     TextInputEditText nameTE;
@@ -66,8 +67,8 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
     TextInputEditText yearTE;
     ImageView imageWine;
     Button buttonImage;
-    private List<String> type= null;
-    private Spinner spinner = null;
+    private List<String> type;
+    private Spinner spinner ;
     private int Year, Month, Day;
     private Calendar calendar;
     ImageView imageDate;
@@ -118,12 +119,12 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
             }
         });
         /*spinner = (Spinner) findViewById(R.id.spinner);
-        tipo = new ArrayList<String>();
-        tipo.add(sContext.getResources().getString(R.string.tinto));
-        tipo.add(sContext.getResources().getString(R.string.blanco));
-        tipo.add(sContext.getResources().getString(R.string.rosado));
-        tipo.add(sContext.getResources().getString(R.string.dulce));
-        tipo.add(sContext.getResources().getString(R.string.espumoso));
+        type = new ArrayList<String>();
+        type.add(sContext.getResources().getString(R.string.tinto));
+        type.add(sContext.getResources().getString(R.string.blanco));
+        type.add(sContext.getResources().getString(R.string.rosado));
+        type.add(sContext.getResources().getString(R.string.dulce));
+        type.add(sContext.getResources().getString(R.string.espumoso));
         adapter_wine = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, type);
         adapter_wine.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter_wine);
@@ -135,10 +136,19 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
                 presenter.AddSpinner();
             }
         });*/
+        id=getIntent().getStringExtra("id");
+        if (id != null) {
+            //estamos en update
+            wine =presenter.getWineById(id);
+
+            neWine=false;
+        } else {
+            //Estamos creando
+            neWine= true;
+        }
         type = new ArrayList<String>();
         type.addAll(presenter.getSpinner());
         adapter_wine = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, type);
-        adapter_wine.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setAdapter(adapter_wine);
         ImageView SpinnerAdd = findViewById(R.id.imageViewSpinner);
@@ -149,7 +159,7 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
                 presenter.AddSpinner();
             }
         });
-
+        wine=new WineEntity();
         checkBox= (CheckBox) findViewById(R.id.checkBox);
 
         nameTE = findViewById(R.id.nameTE);
@@ -224,6 +234,8 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
             }
 
         });
+        yearTE= findViewById(R.id.yearTE);
+        yearTIL = findViewById(R.id.yearTIL);
         calendar = Calendar.getInstance();
         Year = calendar.get(Calendar.YEAR);
         Month = calendar.get(Calendar.MONTH);
@@ -244,24 +256,28 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
                             month0 = "0" + month0;
                         }
                         yearTE.setText(day +"/"+ month0 +"/"+ year);
-                        yearTIL.setError(presenter.getError("YearTrue"));
                     }
                 }, Year, Month, Day);
                 datePickerDialog.show();
             }
         });
 
-
-
-
-
-
-        id=getIntent().getStringExtra("id");
-        if(id!=null){
-            nameTE.setText(id);
-        }       else{
-            //deshabilitar el boton eliminar
+        ImageButton delete=(ImageButton)findViewById(R.id.deleteButton);
+        if (neWine) {
+            delete.setEnabled(false);
+        } else {
+            toolbar.setTitle(R.string.update);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d(TAG, "onclickDeleteImage");
+                    presenter.onClickDeleteImage();
+                }
+            });
         }
+
+
+
         imageWine= findViewById(R.id.imageWine);
         imageWine.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -420,6 +436,7 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
         Log.d(TAG, "Cleaning image");
         imageWine.setImageBitmap(null);
     }
+    
 
     @Override
     public void showErrorPermissionDenied() {
@@ -439,5 +456,32 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
             presenter.permissionDenied();
         }
     }
+    public void deleteWine(){
+        Log.d(TAG, "Delete Wine");
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(sContext);
+        builder.setTitle(R.string.deletedWine);
+        builder.setMessage(R.string.sureDelete);
+        //Accept
+        builder.setPositiveButton(R.string.deletedWine, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                presenter.onClickDeleteButton(id);
+            }
+        });
+        //Cancel
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        android.app.AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    public void saveWine(){
 
+
+
+    }
 }
+

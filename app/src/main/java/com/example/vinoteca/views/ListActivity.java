@@ -2,11 +2,13 @@ package com.example.vinoteca.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +33,8 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
     private Context myContext;
     private ArrayList<WineEntity> items;
     private WineAdapter adapter;
+    private TextView winesNumber;
+    String first;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +46,17 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.menu);
         myContext = this;
-
-
+        items= new ArrayList<>();
         presenter= new ListPresenter( this);
+        /*SharedPreferences preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        if (preferences.getBoolean("firstTime", false)){
+            presenter.wineCharge();
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("firstTime", true);
+            editor.commit();
+        }*/
+
+
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -55,7 +67,10 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
                 presenter.onClickFloatingButton();
             }
         });
-
+        if(isFirstTime()) {
+            presenter.wineCharge();
+        }
+/*
         items = new ArrayList<WineEntity>();
         WineEntity wine1=new WineEntity();
         wine1.setName("Pérez Pascuas Gran Reserva 1994");
@@ -116,13 +131,18 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
         items.add(wine7);
         items.add(wine8);
         items.add(wine9);
-        items.add(wine10);
+        items.add(wine10);*/
+
+
         // Inicializa el RecyclerView
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerViewlist);
-
+        items=presenter.getAllSummarize();
         // Crea el Adaptador con los datos de la lista anterior
         adapter = new WineAdapter(items);
         Log.d(TAG, "Getting items on adapter");
+
+        // Asocia el Adaptador al RecyclerView
+        recyclerView.setAdapter(adapter);
 
         // Asocia el elemento de la lista con una acción al ser pulsado
         adapter.setOnClickListener(new View.OnClickListener() {
@@ -137,8 +157,6 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
             }
         });
 
-        // Asocia el Adaptador al RecyclerView
-        recyclerView.setAdapter(adapter);
 
         // Muestra el RecyclerView en vertical
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -156,10 +174,12 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
                 int position=target.getAdapterPosition();
 
                 Toast.makeText(ListActivity.this, getString(R.string.deletedWine)+ ""+ items.get(position).getName(), Toast.LENGTH_SHORT).show();
-                presenter.onSwipeRecyclerViewItem(position);
+                presenter.onSwipeRecyclerViewItem(position, items.get(position));
 
             }
         });
+
+        TextView winesNumber = (TextView) findViewById(R.id.textView);
 
         helper.attachToRecyclerView(recyclerView);
     }
@@ -235,13 +255,11 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
     }
 
     @Override
-    public void removeRecyclerViewItem(int id) {
+    public void removeRecyclerViewItem(int position) {
         Log.d(TAG, "Removing item swiped");
-        items.remove(id);
-        adapter.notifyItemRemoved(id);
-
-
-
+        items.remove(position);
+        adapter.notifyItemRemoved(position);
+        winesNumber.setText(Integer.toString(items.size())+getString(R.string.vinos));
     }
 
     @Override
@@ -259,9 +277,12 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
     protected void onResume() {
         super.onResume();
         Log.d(TAG,"Starting onResume");
-
-    //    items= presenter.getAllSumarize();
-    }
+        if(items!=null){
+            items.clear();
+            items.addAll(presenter.getAllSummarize());
+            adapter.notifyDataSetChanged();
+           // winesNumber.setText(adapter.getItemCount()+getString(R.string.vinos));
+    } }
 
     @Override
     protected void onPause() {
@@ -287,5 +308,18 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
         Log.d(TAG,"Starting onDestroy");
     }
 
+    private boolean isFirstTime() {
+
+        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+
+        boolean run = sharedpreferences.getBoolean(first, false);
+        if (!run) {
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(first, Boolean.TRUE);
+            editor.apply();
+        }
+        return !run;
+
+    }
 
 }

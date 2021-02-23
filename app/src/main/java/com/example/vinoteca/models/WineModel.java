@@ -14,8 +14,7 @@ public class WineModel {
     public ArrayList<WineEntity> getAllSumarize() {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        RealmResults<WineEntity> result = realm.where(WineEntity.class)
-                .findAll();
+        RealmResults<WineEntity> result = realm.where(WineEntity.class).findAll();
         Log.d("Realm find items:", "" + result.size());
 
         ArrayList<WineEntity> wineList = new ArrayList<>();
@@ -24,7 +23,13 @@ public class WineModel {
         realm.close();
         ArrayList<WineEntity> wineListSummarize = new ArrayList<>();
         for (WineEntity wine : wineList) {
-            wineListSummarize.add(new WineEntity(wine.getImage(), wine.getName(), wine.getCellar(), wine.getId()));
+            WineEntity neWine= new WineEntity();
+            neWine.setId(wine.getId());
+            neWine.setName(wine.getName());
+            neWine.setCellar(wine.getCellar());
+            neWine.setImage(wine.getImage());
+
+            wineListSummarize.add(neWine);
 
         }
         return wineListSummarize;
@@ -117,7 +122,9 @@ public class WineModel {
 
         }
         for (WineEntity wine : listWines) {
-            spinner.add(wine.getType());
+            if(wine.getType()!=null) {
+                spinner.add(wine.getType());
+            }
         }
 
         return spinner;

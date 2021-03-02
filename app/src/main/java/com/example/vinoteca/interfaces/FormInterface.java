@@ -9,15 +9,15 @@ public interface FormInterface {
 
     public interface View {
         void wineNew();
-        void saveWine();
         void addSpinner();
         void backToList();
-        void closeActivity();
         void showRequestPermission();
         void selectImageFromGallery();
         void showErrorPermissionDenied();
         void cleanImage();
         void deleteWine();
+
+        void toast(String string);
     }
 
     public interface Presenter {

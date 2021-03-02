@@ -2,6 +2,7 @@ package com.example.vinoteca.views;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.vinoteca.interfaces.SearchInterface;
@@ -14,10 +15,14 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.vinoteca.R;
+import com.example.vinoteca.presenters.FormPresenter;
+import com.example.vinoteca.presenters.SearchPresenter;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,6 +34,9 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
     int Year, Month, Day ;
     private DatePickerDialog datePickerDialog ;
     Calendar calendar ;
+    TextInputEditText sNameTE;
+    TextInputEditText sYearTE;
+    Spinner spinner;
     ArrayList<String> opcion = new ArrayList<String>();
 
 
@@ -37,6 +45,7 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         sContext = this;
+        presenter= new SearchPresenter(this);
         calendar = Calendar.getInstance();
         Year = calendar.get(Calendar.YEAR) ;
         Month = calendar.get(Calendar.MONTH);
@@ -58,11 +67,33 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
         } else {
             Log.d(TAG, "Error on load Toolbar");
         }
-        Spinner spinner = (Spinner) findViewById(R.id.sSpinner);
-        ArrayList<String> opcion = new ArrayList<>();
-        opcion.add("Criterio de búsqueda");
+        spinner = (Spinner) findViewById(R.id.sSpinner);
+        ArrayList<String> opcion =presenter.getSpinnerValues();
         spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, opcion));
 
+
+        sYearTE=findViewById(R.id.sYearTE);
+        ImageView sYearImage = (ImageView) findViewById(R.id.sYearImage);
+        sYearImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialog = new DatePickerDialog(sContext, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String day = "" + dayOfMonth;
+                        if (dayOfMonth<10) {
+                            day = "0" + dayOfMonth;
+                        }
+                        String month0 = "" + (month + 1);
+                        if (month<10) {
+                            month0 = "0" + month0;
+                        }
+                        sYearTE.setText(day +"/"+ month0 +"/"+ year);
+                    }
+                }, Year, Month, Day);
+                datePickerDialog.show();
+            }
+        });
 
         Button Sbutton= findViewById(R.id.buttonS);
         Sbutton.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +114,11 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
     @Override
     public void buttonSearch() {
         Log.d(TAG,"Click on ImageSearch");
+        Intent intent = getIntent();
+        intent.putExtra("name", sNameTE.getText().toString());
+        intent.putExtra("date", sYearTE.getText().toString());
+        intent.putExtra("spinner", spinner.getSelectedItemId());
+        setResult(RESULT_OK, intent);
         finish();
     }
 }

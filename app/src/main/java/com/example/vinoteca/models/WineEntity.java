@@ -77,8 +77,13 @@ public class WineEntity extends RealmObject {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public Boolean setType(String type) {
+        if(type!=null) {
+            this.type = type;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public String getDenomination() {
@@ -86,7 +91,7 @@ public class WineEntity extends RealmObject {
     }
 
     public boolean setDenomination(String denomination) {
-        if( denomination!=null && denomination.length()>6){
+        if( denomination!=null && denomination.length()>4){
             this.denomination= denomination;
             return true;
         }else{
@@ -113,7 +118,6 @@ public class WineEntity extends RealmObject {
         return date;
     }
     public boolean setDate(String format, String value) {
-        //v=verified
         boolean result = false;
         Date date = null;
         try {
@@ -142,8 +146,4 @@ public class WineEntity extends RealmObject {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "(Wine:"+ id + "; name:"+ name + "; cellar:"+ cellar + "; denomination:"+ denomination + "; price:"+ price + "; date:"+ date + "; type:"+ type + "; alcoholic:"+ alcoholic +")";
-    }
 }

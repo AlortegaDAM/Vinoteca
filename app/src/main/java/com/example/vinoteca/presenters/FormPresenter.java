@@ -12,6 +12,7 @@ import com.example.vinoteca.models.WineEntity;
 import com.example.vinoteca.models.WineModel;
 import com.example.vinoteca.views.MyApplication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FormPresenter implements FormInterface.Presenter {
@@ -31,11 +32,11 @@ public class FormPresenter implements FormInterface.Presenter {
         Log.d(TAG,"On click save");
         if(wine.getId()!="" && wine.getId()!=null){
             wineR.updateWine(wine);
-            view.saveWine();
+            view.wineNew();
         }else if(wineR.insert(wine)){
-            view.saveWine();
+            view.wineNew();
         }else{
-            //view.toast(MyApplication.getContext().getResources().getString(R.string.wineUnsafe));
+            view.toast(MyApplication.getContext().getResources().getString(R.string.wineUnsafe));
         }
 
         /*if(wineR.insert(wine)){
@@ -117,7 +118,7 @@ public class FormPresenter implements FormInterface.Presenter {
         return wineR.getWineById(id);
     }
     @Override
-    public List<String> getSpinner() {
+    public ArrayList<String> getSpinner() {
         return wineR.getSpinnerValues();
     }
     public void onClickDeleteImage(){

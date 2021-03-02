@@ -92,25 +92,18 @@ public class WineModel {
     }
 
     public WineEntity getWineById(String id) {
-        WineEntity wine = null;
+        WineEntity result = new WineEntity();
         Realm realm = Realm.getDefaultInstance();
-        if (id != null) {
-            try {
-                realm.beginTransaction();
-                wine = realm.where(WineEntity.class).equalTo("id", id).findFirst();
-                realm.commitTransaction();
-                realm.close();
-            } catch (Exception e) {
+        result = realm.where(WineEntity.class)
+                .equalTo("id", id)
+                .findFirst();
 
-            }
-
-        }
-        return wine;
+        return result;
     }
 
-    public List<String> getSpinnerValues() {
-        List<String> spinner = new ArrayList<>();
-        List<WineEntity> listWines = new ArrayList<>();
+    public ArrayList<String> getSpinnerValues() {
+        ArrayList<String> spinner = new ArrayList<>();
+        ArrayList<WineEntity> listWines = new ArrayList<>();
         Realm realm = Realm.getDefaultInstance();
         try {
             realm.beginTransaction();
@@ -129,6 +122,8 @@ public class WineModel {
 
         return spinner;
     }
+
+
 }
 
 

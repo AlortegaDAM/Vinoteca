@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +45,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -65,6 +68,7 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
     TextInputEditText priceTE;
     TextInputLayout yearTIL;
     TextInputEditText yearTE;
+    TextInputLayout spinnerTIL;
     ImageView imageWine;
     Button buttonImage;
     private List<String> type;
@@ -89,6 +93,8 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
         setContentView(R.layout.activity_form);
         sContext = this;
         presenter = new FormPresenter(this);
+        wine=new WineEntity();
+        winemodel= new WineModel();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -114,10 +120,42 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Click on  Save button");
-                wine.setName(nameTE.getText().toString());
+                if(!wine.setName(nameTE.getText().toString())){
+                    nameTIL.setError(presenter.getError("WineName"));
+                }
+                if(!wine.setCellar(cellarTE.getText().toString())){
+                    cellarTIL.setError(presenter.getError("WineCellar"));
+                }
+                if(!wine.setDenomination(denominationTE.getText().toString())){
+                    denominationTIL.setError(presenter.getError("WineDenomination"));
+                }
+                if(!wine.setPrice(priceTE.getText().toString())){priceTIL.setError(presenter.getError("WinePrice"));}
+                if(!wine.setType(spinner.getSelectedItem().toString())){spinnerTIL.setError(presenter.getError("WineType"));}
+                try {
+                    BitmapDrawable wineI = (BitmapDrawable) imageWine.getDrawable();
+                    if (wineI == null) {
+                        wine.setImage("");
+                    } else {
+                        Bitmap bitmap = Bitmap.createBitmap(wineI.getBitmap());
+                        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes);
+                        byte[] imageBytes = bytes.toByteArray();
+                        wine.setImage(Base64.encodeToString(imageBytes, Base64.DEFAULT));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(wine.setName(nameTE.getText().toString()) && wine.setCellar(cellarTE.getText().toString()) && wine.setDenomination(denominationTE.getText().toString())
+                && wine.setPrice(priceTE.getText().toString()) && wine.setType(spinner.getSelectedItem().toString()) && wine.setDate("dd/MM/yyyy", yearTE.getText().toString())) {
+                    wine.setAlcoholic(checkBox.isChecked());
+
+                }
+
                 presenter.onClickSaveButton(wine);
             }
         });
+
+        spinnerTIL = findViewById(R.id.spinnerTIL);
         /*spinner = (Spinner) findViewById(R.id.spinner);
         type = new ArrayList<String>();
         type.add(sContext.getResources().getString(R.string.tinto));
@@ -136,16 +174,7 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
                 presenter.AddSpinner();
             }
         });*/
-        id=getIntent().getStringExtra("id");
-        if (id != null) {
-            //estamos en update
-            wine =presenter.getWineById(id);
 
-            neWine=false;
-        } else {
-            //Estamos creando
-            neWine= true;
-        }
         type = new ArrayList<String>();
         type.addAll(presenter.getSpinner());
         adapter_wine = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, type);
@@ -294,6 +323,30 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
                 presenter.onClickButtonImage();
             }
         });
+
+        id=getIntent().getStringExtra("id");
+        if (id != null) {
+            //estamos en update
+            WineEntity wineCharge = presenter.getWineById(id);/*
+            nameTE.setText(wineCharge.getName());
+            cellarTE.setText(wineCharge.getCellar());
+            denominationTE.setText(wineCharge.getDenomination());
+            priceTE.setText(wineCharge.getPrice());
+            checkBox.setChecked(wineCharge.isAlcoholic());
+            yearTE.setText(wineCharge.getDate());
+            if(wineCharge.getImage()=="" | wineCharge.getImage()==null){
+
+            }else{
+                imageWine.setBackground(null);
+                byte[] decodedString = Base64.decode(wine.getImage(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                imageWine.setImageBitmap(decodedByte);
+            }*/
+            neWine=false;
+        } else {
+            //Estamos creando
+            neWine= true;
+        }
     }
         @Override
         public void addSpinner () {
@@ -345,11 +398,6 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
         Log.d(TAG, "New wine in process...");
         finish();
 }
-    @Override
-    public void closeActivity() {
-        Log.d(TAG,"Finish activity");
-        finish();
-    }
 
     @Override
     protected void onResume() {
@@ -436,6 +484,9 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
         Log.d(TAG, "Cleaning image");
         imageWine.setImageBitmap(null);
     }
+    public void toast(String text) {
+        Toast.makeText(sContext, text, Toast.LENGTH_LONG).show();
+    }
     
 
     @Override
@@ -477,11 +528,6 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
         });
         android.app.AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-    public void saveWine(){
-
-
-
     }
 }
 

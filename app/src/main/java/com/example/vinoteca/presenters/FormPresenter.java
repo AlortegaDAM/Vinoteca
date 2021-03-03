@@ -25,6 +25,19 @@ public class FormPresenter implements FormInterface.Presenter {
         wineR =new WineModel();
     }
 
+    @Override
+    public void onClickSearchButton() {
+        Log.d(TAG, "On click searchButton");
+        view.startSearchActivity();
+    }
+
+
+    @Override
+    public void onClickAboutButton() {
+        Log.d(TAG, "On click aboutButton");
+        view.startAboutActivity();
+    }
+
 
 
     @Override

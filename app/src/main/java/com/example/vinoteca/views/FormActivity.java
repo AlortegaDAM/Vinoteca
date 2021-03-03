@@ -33,6 +33,8 @@ import androidx.core.app.ActivityCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -94,6 +96,8 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
         sContext = this;
         presenter = new FormPresenter(this);
         wine=new WineEntity();
+
+        neWine=true;
         winemodel= new WineModel();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -323,8 +327,7 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
                 presenter.onClickButtonImage();
             }
         });
-
-        id=getIntent().getStringExtra("id");
+        /*id=getIntent().getStringExtra("id");
         if (id != null) {
             //estamos en update
             WineEntity wineCharge = presenter.getWineById(id);/*
@@ -341,12 +344,52 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
                 byte[] decodedString = Base64.decode(wine.getImage(), Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 imageWine.setImageBitmap(decodedByte);
-            }*/
+            }
             neWine=false;
         } else {
             //Estamos creando
             neWine= true;
+        }*/
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        Log.d(TAG, "Starting on create options menu");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        Log.d(TAG, "Starting options item selected");
+
+        if (id == R.id.action_search) {
+            Log.d(TAG, "Click on Searchmenu");
+            presenter.onClickSearchButton();
+            return true;
         }
+
+        if (id == R.id.action_settings) {
+            Log.d(TAG, "Click on Settingsmenu");
+            return true;
+        }
+        if (id == R.id.action_about) {
+            Log.d(TAG, "click on aboutmenu");
+            presenter.onClickAboutButton();
+        }
+        if (id == R.id.action_help) {
+            Log.d(TAG, "Click on helpmenu");
+            return true;
+        }
+        if (id == R.id.action_orderBy) {
+            Log.d(TAG, "Click on orderbymenu");
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
         @Override
         public void addSpinner () {
@@ -528,6 +571,18 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
         });
         android.app.AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+    @Override
+    public void startAboutActivity() {
+        Log.d(TAG,"Starting About Activity");
+        Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
+        startActivity(intent);
+    }
+    @Override
+    public void startSearchActivity() {
+        Log.d(TAG,"Starting Search Activity");
+        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+        startActivity(intent);
     }
 }
 

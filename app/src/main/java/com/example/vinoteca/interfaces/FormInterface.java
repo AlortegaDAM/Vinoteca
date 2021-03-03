@@ -18,9 +18,17 @@ public interface FormInterface {
         void deleteWine();
 
         void toast(String string);
+
+        void startAboutActivity();
+
+        void startSearchActivity();
     }
 
     public interface Presenter {
+        void onClickSearchButton();
+
+        void onClickAboutButton();
+
         void onClickSaveButton(WineEntity wine);
         String getError(String error_code);
         void AddSpinner();

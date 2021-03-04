@@ -218,7 +218,7 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
         }
         if (id == R.id.action_help) {
             Log.d(TAG, "Click on helpmenu");
-            return true;
+            presenter.onClickHelpButton();
         }
         if (id == R.id.action_orderBy) {
             Log.d(TAG, "Click on orderbymenu");
@@ -262,10 +262,7 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
         winesNumber.setText(Integer.toString(items.size())+getString(R.string.vinos));
     }
 
-    @Override
-    public void showToast(String error) {
 
-    }
 
     @Override
     protected void onStart() {
@@ -320,6 +317,13 @@ public class ListActivity extends AppCompatActivity implements ListInterface.Vie
         }
         return !run;
 
+    }
+    @Override
+    public void startHelpActivityfromList(){
+        Log.d(TAG,"Starting HelpActivity");
+        Intent intent = new Intent(ListActivity.this, HelpActivity.class);
+        intent.putExtra("helper", "list");
+        startActivity(intent);
     }
 
 }

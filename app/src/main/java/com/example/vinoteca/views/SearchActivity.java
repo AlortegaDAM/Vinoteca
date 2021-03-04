@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -105,6 +106,37 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
         });
     }
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        Log.d(TAG, "Starting options item selected");
+
+        if (id == R.id.action_search) {
+            Log.d(TAG, "Click on Searchmenu");
+            return true;
+        }
+
+        if (id == R.id.action_settings) {
+            Log.d(TAG, "Click on Settingsmenu");
+            return true;
+        }
+        if (id == R.id.action_about) {
+            Log.d(TAG, "click on aboutmenu");
+            return true;
+        }
+        if (id == R.id.action_help) {
+            Log.d(TAG, "Click on helpmenu");
+            presenter.onClickHelpButton();
+            return true;
+        }
+        if (id == R.id.action_orderBy) {
+            Log.d(TAG, "Click on orderbymenu");
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         Log.d(TAG, "OptionsMenu");
@@ -120,5 +152,12 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
         intent.putExtra("spinner", spinner.getSelectedItemId());
         setResult(RESULT_OK, intent);
         finish();
+    }
+    @Override
+    public void startHelpActivityfromSearch(){
+        Log.d(TAG,"Starting HelpActivity");
+        Intent intent = new Intent(SearchActivity.this, HelpActivity.class);
+        intent.putExtra("helper", "search");
+        startActivity(intent);
     }
 }

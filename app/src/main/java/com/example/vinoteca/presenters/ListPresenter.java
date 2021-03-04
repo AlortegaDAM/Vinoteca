@@ -170,5 +170,10 @@ public class ListPresenter implements ListInterface.Presenter {
         }
         return wines;
     }
+    @Override
+    public void onClickHelpButton(){
+        Log.d(TAG,"Vinoteca/Presenters/FormPresenter click on help");
+        view.startHelpActivityfromList();
+    }
 
 }

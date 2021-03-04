@@ -22,4 +22,11 @@ public class SearchPresenter implements SearchInterface.Presenter{
     public ArrayList<String> getSpinnerValues(){
         return (ArrayList<String>) wineM.getSpinnerValues();
     }
+    @Override
+    public void onClickHelpButton(){
+        Log.d(TAG,"Vinoteca/Presenters/FormPresenter click on help");
+        view.startHelpActivityfromSearch();
+    }
+
+
 }

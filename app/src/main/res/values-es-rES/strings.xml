@@ -44,4 +44,5 @@
     <string name="imageselected">Elija una imagen</string>
     <string name="borrar_imagen">Borrar imagen</string>
     <string name="deshacer">Deshacer</string>
+    <string name="HelpActivity">Help</string>
 </resources>

@@ -382,6 +382,7 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
         }
         if (id == R.id.action_help) {
             Log.d(TAG, "Click on helpmenu");
+            presenter.onClickHelpButton();
             return true;
         }
         if (id == R.id.action_orderBy) {
@@ -582,6 +583,13 @@ public class FormActivity extends AppCompatActivity implements FormInterface.Vie
     public void startSearchActivity() {
         Log.d(TAG,"Starting Search Activity");
         Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+        startActivity(intent);
+    }
+    @Override
+    public void startHelpActivityfromForm(){
+        Log.d(TAG,"Starting HelpActivity");
+        Intent intent = new Intent(FormActivity.this, HelpActivity.class);
+        intent.putExtra("helper", "form");
         startActivity(intent);
     }
 }

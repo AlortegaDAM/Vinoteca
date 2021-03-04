@@ -142,5 +142,10 @@ public class FormPresenter implements FormInterface.Presenter {
         wineR.deleteWine(id);
         view.backToList();
     }
+    @Override
+    public void onClickHelpButton(){
+        Log.d(TAG,"Vinoteca/Presenters/FormPresenter click on help");
+        view.startHelpActivityfromForm();
+    }
 
 }

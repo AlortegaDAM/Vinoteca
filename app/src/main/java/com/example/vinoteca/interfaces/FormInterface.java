@@ -22,6 +22,8 @@ public interface FormInterface {
         void startAboutActivity();
 
         void startSearchActivity();
+
+        void startHelpActivityfromForm();
     }
 
     public interface Presenter {
@@ -41,5 +43,7 @@ public interface FormInterface {
         void onClickDeleteButton(String id);
         WineEntity getWineById(String id);
         void onClickDeleteImage();
+
+        void onClickHelpButton();
     }
 }

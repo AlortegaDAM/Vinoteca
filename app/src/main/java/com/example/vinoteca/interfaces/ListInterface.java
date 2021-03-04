@@ -12,7 +12,9 @@ public interface ListInterface {
         void startAboutActivity();
         void startFormActivity(String id);
         void removeRecyclerViewItem(int id);
-        void showToast(String error);
+
+        void startHelpActivityfromList();
+
     }
 
     public interface Presenter{
@@ -23,5 +25,7 @@ public interface ListInterface {
         void onSwipeRecyclerViewItem(int id, WineEntity wine);
         void wineCharge();
         ArrayList<WineEntity> getAllSummarize();
+
+        void onClickHelpButton();
     }
 }
